@@ -7,7 +7,7 @@ using Valve.VR;
 public class VR_Input_test : MonoBehaviour
 {
     public SteamVR_Action_Boolean TriggerClick;
-    private SteamVR_Input_Sources inputSource;
+    public SteamVR_Input_Sources inputSource;
 
     private void Start() { }
 
