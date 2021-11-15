@@ -3,30 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
 
-public class PlayerMove : MonoBehaviour
+public class Grab : MonoBehaviour
 {
     public SteamVR_Input_Sources handType;        // 컨트롤러 선택 (모두, 왼손, 오른손)
     public SteamVR_Behaviour_Pose controllerPose; // 컨트롤러 정보
-    //public Transform camTr;                       // 움직일 카메라
-    //public float speed;
 
-    //private CharacterController cc;    // rigidbody 활용x
     private GameObject colliderObject; // 충돌 객체
     private GameObject objectInHand;     // 잡은 객체
 
     // 컨트롤러 버튼 타입
-    /*public SteamVR_Action_Boolean leftMove;
-    public SteamVR_Action_Boolean rightMove;
-    public SteamVR_Action_Boolean forwardMove;
-    public SteamVR_Action_Boolean backMove;*/
     public SteamVR_Action_Boolean grap;
     
 
 
     void Start()
     {
-        //speed = 1.5f;
-        //cc = GetComponent<CharacterController>();
+
     }
 
     // Update is called once per frame
@@ -47,23 +39,6 @@ public class PlayerMove : MonoBehaviour
                 ReleaseObject();
             }
         }
-        /*if (leftMove.GetState(handType))
-        {
-            cc.SimpleMove(camTr.right * speed * -1);
-            Debug.Log("leftMove");
-        }   
-        else if (rightMove.GetState(handType))
-        {
-            cc.SimpleMove(camTr.right * speed);
-        }
-        else if (forwardMove.GetState(handType))
-        {
-            cc.SimpleMove(camTr.forward * speed);
-        }
-        else if (backMove.GetState(handType))
-        {
-            cc.SimpleMove(camTr.forward * speed * -1);
-        }*/
     }
 
     // 충돌이 시작되는 순간
