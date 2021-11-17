@@ -7,7 +7,7 @@ using Valve.VR;
 
 public class LoadText : MonoBehaviour
 {
-    private UiManager uiManger;
+    private UiManager uiManager;
 
     public GameObject UI1;
 
@@ -42,11 +42,10 @@ public class LoadText : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        uiManger = GameObject.Find("Controller (right)").GetComponent<UiManager>();
+        uiManager = GetComponent<UiManager>();
         //TreePicture = GameObject.Find("TreePicture");
         Checking_On_off = false;
         UI1.gameObject.SetActive(false);
-        UI2.gameObject.SetActive(false);
         TreeTag = null;
         StartCoroutine(ViewInfo());
 
@@ -55,27 +54,24 @@ public class LoadText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
- 
+
     }
     public void LoadText_toggle()
     {
         Checking_On_off = !Checking_On_off;
 
-            //TreeName = hit.transform.name;
-        if (Checking_On_off == true && uiManger.RaycastCheck ==true)
+
+        if (Checking_On_off == true && uiManager.RaycastCheck ==true)
         {
             InfoUI_toggle();
-            TreeTag = TryingGetTagAtParent(uiManger.hit.transform);
 
             string txtData = null;
-            txtData = UIComponent.transform.Find(hit.transform.name).GetComponent<Text>().text;
-
-
+            txtData = GameObject.Find(uiManager.hit.transform.gameObject.name).GetComponent<Text>().text;
             runningCoroutine = StartCoroutine(InputText(txtData));
         }
         else
         {
-            if(TreeTag != null)
+            if(uiManager.hit.transform.gameObject == null)
             {
                 InfoUI_toggle();
                 StopCoroutine(runningCoroutine);
@@ -85,7 +81,7 @@ public class LoadText : MonoBehaviour
                     Legacy_Text[i].text = null;
                 }
             }
-            else if(uiManger.RaycastCheck==false)
+            else if(uiManager.RaycastCheck==false)
             {
                 Checking_On_off = !Checking_On_off;
             }
@@ -94,21 +90,7 @@ public class LoadText : MonoBehaviour
         
     }
 
-    private string TryingGetTagAtParent(Transform transform)
-    {   // 물체의 트랜스폼을 기준으로 태그를 찾고 없다면 부모의 태그를 얻는 함수
-        do
-        {
-            string result = transform.tag.ToString();
-            if (result == "Untagged")
-            {   // 태그가 없을 경우
-                transform = transform.parent;
-            }
-            else
-            {
-                return result;
-            }
-        } while (true);
-    }
+
 
     public IEnumerator InputText(string txtData)
     {
@@ -116,7 +98,7 @@ public class LoadText : MonoBehaviour
 
         for(int i=0;i<=txtData.Length;i++)
         {
-            Legacy_Info_text.text.Substring(0, i);
+            Legacy_Info_text.text = txtData.Substring(0, i);
             yield return new WaitForSecondsRealtime(textDelay);
         }
 
@@ -138,7 +120,7 @@ public class LoadText : MonoBehaviour
             {
                 Debug.Log("ViewInfo");
                 LoadText_toggle();
-                yield return new WaitForSecondsRealtime(1f);
+                yield return new WaitForSecondsRealtime(0.1f);
             }
             else
             {
@@ -157,13 +139,13 @@ public class LoadText : MonoBehaviour
         {
             UI1.gameObject.SetActive(true);
         }
-        if (UI2.gameObject.activeSelf == true)
+        /*if (UI2.gameObject.activeSelf == true)
         {
             UI2.gameObject.SetActive(false);
         }
         else
         {
             UI2.gameObject.SetActive(true);
-        }
+        }*/
     }
 }

@@ -25,10 +25,13 @@ public class UiManager : MonoBehaviour
     public float LayserDistance = 100f;
 
     public Text Legacy_name;
+
+    public GameObject controller_obj;
     // Start is called before the first frame update
     void Start()
     {
         layser = Instantiate(layserPrefab);
+        
         layserTransform = layser.transform;
 
         layerMask = 1 << 8;
@@ -39,16 +42,21 @@ public class UiManager : MonoBehaviour
     {
         if (teleportAction.GetState(handType))
         {
-            if (Physics.Raycast(controllerPose.transform.position, transform.forward,
+            Debug.Log("Check Input");
+            if (Physics.Raycast(controllerPose.transform.position, controllerPose.transform.forward,
                 out hit, LayserDistance, layerMask))
             {
                 hitPoint = hit.point;
                 RaycastCheck = true;
+                Legacy_name.gameObject.SetActive(true);
+                Legacy_name.text = hit.transform.gameObject.name;
             }
 
             else
             {
                 RaycastCheck = false;
+                Legacy_name.gameObject.SetActive(false);
+                Legacy_name.text = null;
             }
             ShowLayser(hit);
 
@@ -63,15 +71,25 @@ public class UiManager : MonoBehaviour
     }
     public void ShowLayser(RaycastHit hit)
     {
+
         layser.SetActive(true);
+        if(RaycastCheck)
+        {
+            layser.transform.position = Vector3.Lerp(controllerPose.transform.position, hit.point, 0.5f);
+            layserTransform.LookAt(hit.point);
+            layserTransform.localScale = new Vector3(layserTransform.localScale.x, layserTransform.localScale.y, hit.distance);
 
-        layser.transform.position = Vector3.Lerp(controllerPose.transform.position, hitPoint, 0.5f);
-        layserTransform.LookAt(hitPoint);
-        layserTransform.localScale = new Vector3(layserTransform.localScale.x, layserTransform.localScale.y, hit.distance);
-
-
-        Legacy_name.gameObject.SetActive(true);
-        Legacy_name.text = hit.transform.gameObject.name;
+            Debug.Log(hit.transform.position);
+        }
+        
+        else
+        {
+            Vector3 hit_point = controllerPose.transform.position + controllerPose.transform.forward * LayserDistance;
+            //layser.transform.position = controllerPose.transform.position;
+            layser.transform.position = Vector3.Lerp(controllerPose.transform.position, hit_point, 0.5f);
+            layserTransform.LookAt(hit_point);
+            layserTransform.localScale = new Vector3(layserTransform.localScale.x, layserTransform.localScale.y, LayserDistance);
+        }
 
     }
 }
