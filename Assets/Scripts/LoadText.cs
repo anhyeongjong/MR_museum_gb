@@ -90,6 +90,7 @@ public class LoadText : MonoBehaviour
             }
             txtData = legacyData.GetDescription();
             Legacy_Info_text.text = txtData;
+            SVC.ScrollReset();
             soundManager.AudioPlay(legacyData.audioFile);
         }
         else

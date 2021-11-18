@@ -45,6 +45,18 @@ public class ScrollViewChange : MonoBehaviour
         ScrollMove(enterSize);
     }
 
+    public void ScrollReset()
+    {
+        if (contentRectTransform == null)
+        {
+            return;
+        }
+
+        Vector2 position = contentRectTransform.anchoredPosition;
+        position.y = - enterSize * text.text.Split('\n').Length;
+        contentRectTransform.anchoredPosition = position;
+    }
+
     public void ScrollMove(float f)
     {
         Debug.Log(contentRectTransform);
