@@ -79,7 +79,6 @@ public class UiManager : MonoBehaviour
             layserTransform.LookAt(hit.point);
             layserTransform.localScale = new Vector3(layserTransform.localScale.x, layserTransform.localScale.y, hit.distance);
 
-            Debug.Log(hit.transform.position);
         }
         
         else

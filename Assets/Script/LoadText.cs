@@ -7,16 +7,13 @@ using Valve.VR;
 
 public class LoadText : MonoBehaviour
 {
-    private UiManager uiManager;
+    public UiManager uiManager;
 
     public GameObject UI1;
 
-    public GameObject UI2;
-
     public GameObject Legacy;
-    private string TreeTag; //나무 들어갈 이름
 
-    [Range(0.01f, 0.1f)] public float textDelay;//텍스트 표기 속도
+    //[Range(0.01f, 0.1f)] public float textDelay;//텍스트 표기 속도
 
     public Text[] Legacy_Text;//표시할 텍스트
     public Text Legacy_Info_text;
@@ -33,8 +30,12 @@ public class LoadText : MonoBehaviour
 
     public SteamVR_Input_Sources handType;
 
+    public SteamVR_Action_Boolean Up;
+    public SteamVR_Action_Boolean down;
+
     public GameObject UIComponent;
 
+    private ScrollViewChange SVC;
     //private int layerMask;//Raycast가 식별할 레이어
 
     //private bool RaycastCheck;//Raycast가 물체를 충돌했는가 체크
@@ -42,13 +43,11 @@ public class LoadText : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        uiManager = GetComponent<UiManager>();
         //TreePicture = GameObject.Find("TreePicture");
         Checking_On_off = false;
         UI1.gameObject.SetActive(false);
-        TreeTag = null;
         StartCoroutine(ViewInfo());
-
+        SVC = Legacy_Info_text.gameObject.GetComponent<ScrollViewChange>();
     }
 
     // Update is called once per frame
@@ -61,30 +60,40 @@ public class LoadText : MonoBehaviour
         Checking_On_off = !Checking_On_off;
 
 
+        string name = null ;
+        try
+        { 
+            name = uiManager.hit.transform.gameObject.name; 
+        }
+        catch (System.NullReferenceException)
+        {
+            Debug.Log("NullReferenceException");
+        }
+
         if (Checking_On_off == true && uiManager.RaycastCheck ==true)
         {
             InfoUI_toggle();
 
             string txtData = null;
-            txtData = GameObject.Find(uiManager.hit.transform.gameObject.name).GetComponent<Text>().text;
-            runningCoroutine = StartCoroutine(InputText(txtData));
+            if (name == null)
+            {
+                Debug.Log("충돌 물체 없음");
+                return;
+            }
+            txtData = GameObject.Find(name).GetComponent<Text>().text;
+            Legacy_Info_text.text = txtData;
         }
         else
         {
-            if(uiManager.hit.transform.gameObject == null)
+            if (uiManager.Legacy_name.gameObject.activeSelf ==true)
             {
                 InfoUI_toggle();
-                StopCoroutine(runningCoroutine);
-                TreeTag = null;
-                for(int i=0;i<Legacy_Text.Length;i++)
-                {
-                    Legacy_Text[i].text = null;
-                }
             }
-            else if(uiManager.RaycastCheck==false)
+            else if (uiManager.RaycastCheck == false)
             {
                 Checking_On_off = !Checking_On_off;
             }
+            Debug.Log("NullReferenceException");
                
         }
         
@@ -92,7 +101,7 @@ public class LoadText : MonoBehaviour
 
 
 
-    public IEnumerator InputText(string txtData)
+   /* public IEnumerator InputText(string txtData)
     {
         Debug.Log(txtData.Length);
 
@@ -110,8 +119,8 @@ public class LoadText : MonoBehaviour
                 yield return new WaitForSecondsRealtime(textDelay);
 
             }
-        }*/
-    }
+        }
+    }*/
     public IEnumerator ViewInfo()
     {
         do
@@ -120,7 +129,17 @@ public class LoadText : MonoBehaviour
             {
                 Debug.Log("ViewInfo");
                 LoadText_toggle();
-                yield return new WaitForSecondsRealtime(0.1f);
+                yield return new WaitForSecondsRealtime(0.4f);
+            }
+            if(Up.GetState(handType))
+            {
+                SVC.ScrollUp();
+                yield return new WaitForSecondsRealtime(0.5f);
+            }
+            else if(down.GetState(handType))
+            {
+                SVC.ScrollDown();
+                yield return new WaitForSecondsRealtime(0.5f);
             }
             else
             {
@@ -131,21 +150,6 @@ public class LoadText : MonoBehaviour
 
     public void InfoUI_toggle()
     {
-        if (UI1.gameObject.activeSelf == true)
-        {
-            UI1.gameObject.SetActive(false);
-        }
-        else
-        {
-            UI1.gameObject.SetActive(true);
-        }
-        /*if (UI2.gameObject.activeSelf == true)
-        {
-            UI2.gameObject.SetActive(false);
-        }
-        else
-        {
-            UI2.gameObject.SetActive(true);
-        }*/
+        UI1.gameObject.SetActive(!UI1.gameObject.activeSelf);
     }
 }
