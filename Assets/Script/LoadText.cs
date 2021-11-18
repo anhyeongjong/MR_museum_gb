@@ -9,11 +9,11 @@ public class LoadText : MonoBehaviour
 {
     private UiManager uiManager;
 
-    public GameObject UI1;
+    public GameObject InfoUi;
 
-    public GameObject UI2;
+    //public GameObject UI2;
 
-    public GameObject Legacy;
+    //public GameObject Legacy;
     private string TreeTag; //나무 들어갈 이름
 
     [Range(0.01f, 0.1f)] public float textDelay;//텍스트 표기 속도
@@ -33,7 +33,7 @@ public class LoadText : MonoBehaviour
 
     public SteamVR_Input_Sources handType;
 
-    public GameObject UIComponent;
+    //public GameObject UIComponent;
 
     //private int layerMask;//Raycast가 식별할 레이어
 
@@ -45,7 +45,7 @@ public class LoadText : MonoBehaviour
         uiManager = GetComponent<UiManager>();
         //TreePicture = GameObject.Find("TreePicture");
         Checking_On_off = false;
-        UI1.gameObject.SetActive(false);
+        InfoUi.gameObject.SetActive(false);
         TreeTag = null;
         StartCoroutine(ViewInfo());
 
@@ -131,13 +131,13 @@ public class LoadText : MonoBehaviour
 
     public void InfoUI_toggle()
     {
-        if (UI1.gameObject.activeSelf == true)
+        if (InfoUi.gameObject.activeSelf == true)
         {
-            UI1.gameObject.SetActive(false);
+            InfoUi.gameObject.SetActive(false);
         }
         else
         {
-            UI1.gameObject.SetActive(true);
+            InfoUi.gameObject.SetActive(true);
         }
         /*if (UI2.gameObject.activeSelf == true)
         {
