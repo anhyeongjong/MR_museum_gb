@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.Animations;
 using Valve.VR;
 
-public class VR_move : MonoBehaviour
+public class VR_Move : MonoBehaviour
 {
     public Transform camTr;                       // 움직일 카메라
-    public float speed;                           // 걷는 속
+    public float speed;                           // 걷는 속도
     public static bool isWalking;                 // 걷는 상태
 
     private SteamVR_Input_Sources lefthand;       // 컨트롤러 선택 (모두, 왼손, 오른손)

@@ -94,9 +94,12 @@ public class LoadText : MonoBehaviour
         }
         else
         {
+            UI1.gameObject.SetActive(false);
+            Legacy_Info_text.text = null;
+            soundManager.AudioStop();
             if (uiManager.Legacy_name.gameObject.activeSelf ==true)
             {
-                InfoUI_toggle();
+                
             }
             else if (uiManager.RaycastCheck == false)
             {

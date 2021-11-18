@@ -13,6 +13,7 @@ public class SoundManager : MonoBehaviour
         {
             audioSource = gameObject.AddComponent<AudioSource>();
         }
+        audioSource.playOnAwake = false;
     }
 
     public void AudioPlay(AudioClip clip)
@@ -24,7 +25,7 @@ public class SoundManager : MonoBehaviour
 
         audioSource.clip = clip;
 
-        audioSource.PlayDelayed(1f);
+        audioSource.Play();
     }
 
     public void AudioStop()

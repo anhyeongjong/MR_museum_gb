@@ -12,7 +12,7 @@ public class ScrollViewChange : MonoBehaviour
 
     float enterSize, lineValue;
 
-    private void Start()
+    private void Awake()
     {
         content = gameObject;
         text = content.GetComponent<Text>();
@@ -47,6 +47,12 @@ public class ScrollViewChange : MonoBehaviour
 
     public void ScrollMove(float f)
     {
+        Debug.Log(contentRectTransform);
+        if(contentRectTransform == null)
+        {
+            return;
+        }
+
         Vector2 position = contentRectTransform.anchoredPosition;
         position.y += f;
         contentRectTransform.anchoredPosition = position;
