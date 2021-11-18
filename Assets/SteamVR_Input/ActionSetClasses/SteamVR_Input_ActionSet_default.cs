@@ -105,6 +105,22 @@ namespace Valve.VR
             }
         }
         
+        public virtual SteamVR_Action_Boolean SnapForward
+        {
+            get
+            {
+                return SteamVR_Actions.default_SnapForward;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean SnapBack
+        {
+            get
+            {
+                return SteamVR_Actions.default_SnapBack;
+            }
+        }
+        
         public virtual SteamVR_Action_Vibration Haptic
         {
             get
