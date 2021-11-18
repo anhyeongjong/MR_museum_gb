@@ -48,7 +48,7 @@ public class ScrollViewChange : MonoBehaviour
     public void ScrollMove(float f)
     {
         Debug.Log(contentRectTransform);
-        if(contentRectTransform == null)
+        if(contentRectTransform ==  null)
         {
             return;
         }
