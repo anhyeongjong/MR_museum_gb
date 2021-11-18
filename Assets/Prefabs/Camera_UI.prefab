@@ -756,8 +756,8 @@ MonoBehaviour:
   Legacy_Text: []
   Legacy_Info_text: {fileID: 5228631157510793999}
   teleportAction:
-    actionPath: /actions/default/in/GrabGrip
-    needsReinit: 0
+    actionPath: 
+    needsReinit: 1
   handType: 2
   Up:
     actionPath: /actions/default/in/SnapForward
@@ -765,7 +765,11 @@ MonoBehaviour:
   down:
     actionPath: /actions/default/in/SnapBack
     needsReinit: 0
+  Audio_Stop:
+    actionPath: /actions/default/in/GrabGrip
+    needsReinit: 0
   UIComponent: {fileID: 5228631157414515175}
+  drone: {fileID: 0}
 --- !u!1 &5228631157510793998
 GameObject:
   m_ObjectHideFlags: 0

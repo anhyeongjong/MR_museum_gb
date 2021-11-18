@@ -33,9 +33,15 @@ public class LoadText : MonoBehaviour
     public SteamVR_Action_Boolean Up;
     public SteamVR_Action_Boolean down;
 
+    public SteamVR_Action_Boolean Audio_Stop;
+
     public GameObject UIComponent;
 
     private ScrollViewChange SVC;
+
+    private SoundManager soundManager;
+
+    public GameObject drone;
     //private int layerMask;//Raycast가 식별할 레이어
 
     //private bool RaycastCheck;//Raycast가 물체를 충돌했는가 체크
@@ -48,6 +54,7 @@ public class LoadText : MonoBehaviour
         UI1.gameObject.SetActive(false);
         StartCoroutine(ViewInfo());
         SVC = Legacy_Info_text.gameObject.GetComponent<ScrollViewChange>();
+        soundManager = drone.GetComponent<SoundManager>();
     }
 
     // Update is called once per frame
@@ -73,6 +80,7 @@ public class LoadText : MonoBehaviour
         if (Checking_On_off == true && uiManager.RaycastCheck ==true)
         {
             InfoUI_toggle();
+            LegacyData legacyData = GameObject.Find(name).GetComponent<LegacyData>();
 
             string txtData = null;
             if (name == null)
@@ -80,8 +88,9 @@ public class LoadText : MonoBehaviour
                 Debug.Log("충돌 물체 없음");
                 return;
             }
-            txtData = GameObject.Find(name).GetComponent<Text>().text;
+            txtData = legacyData.GetDescription();
             Legacy_Info_text.text = txtData;
+            soundManager.AudioPlay(legacyData.audioFile);
         }
         else
         {
@@ -140,6 +149,11 @@ public class LoadText : MonoBehaviour
             {
                 SVC.ScrollDown();
                 yield return new WaitForSecondsRealtime(0.5f);
+            }
+            else if(Audio_Stop.GetState(handType))
+            {
+                soundManager.AudioStop();
+                yield return new WaitForSecondsRealtime(0.2f);
             }
             else
             {
