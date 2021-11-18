@@ -6,11 +6,11 @@ using Valve.VR;
 
 public class VR_move : MonoBehaviour
 {
-    public SteamVR_Input_Sources handType;        // 컨트롤러 선택 (모두, 왼손, 오른손)
     public Transform camTr;                       // 움직일 카메라
-    public float speed;
+    public float speed;                           // 걷는 속
     public static bool isWalking;                 // 걷는 상태
 
+    private SteamVR_Input_Sources lefthand;       // 컨트롤러 선택 (모두, 왼손, 오른손)
     private CharacterController cc;               // rigidbody 활용x
 
     // 컨트롤러 버튼 타입
@@ -22,24 +22,27 @@ public class VR_move : MonoBehaviour
     private void Start()
     {
         cc = GetComponent<CharacterController>();
+        lefthand = SteamVR_Input_Sources.LeftHand;  
     }
+
+    // 이동
     private void Update()
     {
-        isWalking = leftMove.GetState(handType) || rightMove.GetState(handType) || forwardMove.GetState(handType) || backMove.GetState(handType);  // 걷는 상태
+        isWalking = leftMove.GetState(lefthand) || rightMove.GetState(lefthand) || forwardMove.GetState(lefthand) || backMove.GetState(lefthand);  // 걷는 상태
 
-        if (leftMove.GetState(handType))
+        if (leftMove.GetState(lefthand))
         {
             cc.SimpleMove(camTr.right * speed * -1);
         }   
-        else if (rightMove.GetState(handType))
+        else if (rightMove.GetState(lefthand))
         {
             cc.SimpleMove(camTr.right * speed);
         }
-        else if (forwardMove.GetState(handType))
+        else if (forwardMove.GetState(lefthand))
         {
             cc.SimpleMove(camTr.forward * speed);
         }
-        else if (backMove.GetState(handType))
+        else if (backMove.GetState(lefthand))
         {
             cc.SimpleMove(camTr.forward * speed * -1);
         }
