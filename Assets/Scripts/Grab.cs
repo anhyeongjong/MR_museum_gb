@@ -8,7 +8,7 @@ public class Grab : MonoBehaviour
     public SteamVR_Input_Sources handType;        // 컨트롤러 선택 (모두, 왼손, 오른손)
     public SteamVR_Behaviour_Pose controllerPose; // 컨트롤러 정보
 
-    private GameObject colliderObject; // 충돌 객체
+    private GameObject colliderObject;   // 충돌 객체
     private GameObject objectInHand;     // 잡은 객체
 
     // 컨트롤러 버튼 타입
