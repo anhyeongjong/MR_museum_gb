@@ -1,7 +1,7 @@
 {
    "action_manifest_version" : 0,
    "alias_info" : {},
-   "app_key" : "application.generated.unity.mr_muesum_gb.exe",
+   "app_key" : "application.generated.unity.mr_museum_gb.exe",
    "bindings" : {
       "/actions/buggy" : {
          "sources" : [
@@ -161,6 +161,9 @@
             },
             {
                "inputs" : {
+                  "center" : {
+                     "output" : "/actions/default/in/center"
+                  },
                   "east" : {
                      "output" : "/actions/default/in/snapturnright"
                   },
@@ -182,6 +185,9 @@
             },
             {
                "inputs" : {
+                  "center" : {
+                     "output" : "/actions/default/in/center"
+                  },
                   "east" : {
                      "output" : "/actions/default/in/snapturnright"
                   },
