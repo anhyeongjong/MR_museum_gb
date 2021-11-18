@@ -12,9 +12,7 @@ public class Grab : MonoBehaviour
     private GameObject objectInHand;     // 잡은 객체
 
     // 컨트롤러 버튼 타입
-    public SteamVR_Action_Boolean grap;
-    
-
+    public SteamVR_Action_Boolean garb;
 
     void Start()
     {
@@ -24,7 +22,7 @@ public class Grab : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (grap.GetLastStateDown(handType))
+        if (garb.GetLastStateDown(handType))
         {
             // 잡는 버튼 누를 때
             if(colliderObject)
@@ -32,7 +30,7 @@ public class Grab : MonoBehaviour
                 GrabObject();
             }
         }
-        if (grap.GetLastStateUp(handType))
+        if (garb.GetLastStateUp(handType))
         {
             if (objectInHand)
             {
